@@ -11,7 +11,11 @@ class MapViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        navigationController?.navigationBar.barStyle = .default
+        view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "My map"
+        
         // Do any additional setup after loading the view.
     }
     

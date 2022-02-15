@@ -11,7 +11,10 @@ class CalendarViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        navigationController?.navigationBar.barStyle = .default
+        view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "My calendar"
         // Do any additional setup after loading the view.
     }
     

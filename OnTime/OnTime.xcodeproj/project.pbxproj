@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		C5286E1F27BBCF7400A00443 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5286E1E27BBCF7400A00443 /* Main.storyboard */; };
+		C5286E2127BBD6E200A00443 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5286E2027BBD6E200A00443 /* ScheduleView.swift */; };
+		C5286E2427BBD89100A00443 /* ScheduleViewController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5286E2327BBD89100A00443 /* ScheduleViewController+UITableView.swift */; };
 		C5FE58C127BBC7BB00EAA944 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE58C027BBC7BB00EAA944 /* AppDelegate.swift */; };
 		C5FE58C327BBC7BB00EAA944 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE58C227BBC7BB00EAA944 /* SceneDelegate.swift */; };
 		C5FE58C527BBC7BB00EAA944 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE58C427BBC7BB00EAA944 /* MainTabBarController.swift */; };
@@ -20,6 +22,8 @@
 
 /* Begin PBXFileReference section */
 		C5286E1E27BBCF7400A00443 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		C5286E2027BBD6E200A00443 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
+		C5286E2327BBD89100A00443 /* ScheduleViewController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleViewController+UITableView.swift"; sourceTree = "<group>"; };
 		C5FE58BD27BBC7BB00EAA944 /* OnTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5FE58C027BBC7BB00EAA944 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5FE58C227BBC7BB00EAA944 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +47,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C5286E2227BBD6E800A00443 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C5286E2027BBD6E200A00443 /* ScheduleView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C5286E2527BBD89A00A00443 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C5286E2327BBD89100A00443 /* ScheduleViewController+UITableView.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		C5FE58B427BBC7BB00EAA944 = {
 			isa = PBXGroup;
 			children = (
@@ -64,7 +84,9 @@
 			children = (
 				C5FE58C027BBC7BB00EAA944 /* AppDelegate.swift */,
 				C5FE58C227BBC7BB00EAA944 /* SceneDelegate.swift */,
+				C5286E2227BBD6E800A00443 /* View */,
 				C5FE58D427BBC7E400EAA944 /* Controller */,
+				C5286E2527BBD89A00A00443 /* Extensions */,
 				C5FE58C927BBC7BC00EAA944 /* Assets.xcassets */,
 				C5286E1E27BBCF7400A00443 /* Main.storyboard */,
 				C5FE58CB27BBC7BC00EAA944 /* LaunchScreen.storyboard */,
@@ -158,6 +180,8 @@
 				C5FE58D827BBC90A00EAA944 /* CalendarViewController.swift in Sources */,
 				C5FE58DA27BBC91500EAA944 /* MapViewController.swift in Sources */,
 				C5FE58C527BBC7BB00EAA944 /* MainTabBarController.swift in Sources */,
+				C5286E2427BBD89100A00443 /* ScheduleViewController+UITableView.swift in Sources */,
+				C5286E2127BBD6E200A00443 /* ScheduleView.swift in Sources */,
 				C5FE58C127BBC7BB00EAA944 /* AppDelegate.swift in Sources */,
 				C5FE58C327BBC7BB00EAA944 /* SceneDelegate.swift in Sources */,
 				C5FE58D627BBC8F500EAA944 /* ScheduleViewController.swift in Sources */,

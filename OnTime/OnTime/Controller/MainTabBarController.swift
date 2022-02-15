@@ -11,27 +11,30 @@ class MainTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBar.barTintColor = .white
+        
         setupTabBar()
         
+        tabBar.isTranslucent = true
     }
     
     func setupTabBar() {
-        let scheduleController = UINavigationController(rootViewController: ScheduleViewController())
-        scheduleController.tabBarItem.image = UIImage(systemName: "house")
-        scheduleController.tabBarItem.selectedImage = UIImage(systemName: "house.fill")
+        let scheduleController = createNavController(with: ScheduleViewController(), selected: UIImage(systemName: "house.fill"), unselected: UIImage(systemName: "house"))
         
-        let calendarController = UINavigationController(rootViewController: CalendarViewController())
-        calendarController.tabBarItem.image = UIImage(systemName: "calendar")
-        calendarController.tabBarItem.selectedImage = UIImage(systemName: "calendar")
+        let calendarController = createNavController(with: CalendarViewController(), selected: UIImage(systemName: "calendar"), unselected: UIImage(systemName: "calendar"))
         
-        let mapController = UINavigationController(rootViewController: MapViewController())
-        mapController.tabBarItem.image = UIImage(systemName: "map")
-        mapController.tabBarItem.selectedImage = UIImage(systemName: "map.fill")
+        let mapController = createNavController(with: MapViewController(), selected: UIImage(systemName: "map.fill"), unselected: UIImage(systemName: "map"))
         
         viewControllers = [scheduleController, calendarController, mapController]
     }
 
+    func createNavController(with vc: UIViewController, selected: UIImage?, unselected: UIImage?) -> UINavigationController {
+        let viewController = vc
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.tabBarItem.image = unselected
+        navController.tabBarItem.image = selected
+        
+        return navController
+    }
 
 }
 
