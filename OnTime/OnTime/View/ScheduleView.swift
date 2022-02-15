@@ -10,7 +10,7 @@ import UIKit
 class ScheduleView: UIView {
     
     let tableView: UITableView = {
-        let table = UITableView()
+        let table = UITableView(frame: .null, style: .insetGrouped)
         table.separatorStyle = .none
         table.allowsSelection = false
         table.translatesAutoresizingMaskIntoConstraints = false

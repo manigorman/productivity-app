@@ -10,6 +10,8 @@
 		C5286E1F27BBCF7400A00443 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5286E1E27BBCF7400A00443 /* Main.storyboard */; };
 		C5286E2127BBD6E200A00443 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5286E2027BBD6E200A00443 /* ScheduleView.swift */; };
 		C5286E2427BBD89100A00443 /* ScheduleViewController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5286E2327BBD89100A00443 /* ScheduleViewController+UITableView.swift */; };
+		C54CC81A27BC493C002681D9 /* AddTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54CC81927BC493C002681D9 /* AddTaskController.swift */; };
+		C54CC81C27BC4CC9002681D9 /* AddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54CC81B27BC4CC9002681D9 /* AddTaskView.swift */; };
 		C5FE58C127BBC7BB00EAA944 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE58C027BBC7BB00EAA944 /* AppDelegate.swift */; };
 		C5FE58C327BBC7BB00EAA944 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE58C227BBC7BB00EAA944 /* SceneDelegate.swift */; };
 		C5FE58C527BBC7BB00EAA944 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE58C427BBC7BB00EAA944 /* MainTabBarController.swift */; };
@@ -24,6 +26,8 @@
 		C5286E1E27BBCF7400A00443 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C5286E2027BBD6E200A00443 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		C5286E2327BBD89100A00443 /* ScheduleViewController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleViewController+UITableView.swift"; sourceTree = "<group>"; };
+		C54CC81927BC493C002681D9 /* AddTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskController.swift; sourceTree = "<group>"; };
+		C54CC81B27BC4CC9002681D9 /* AddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskView.swift; sourceTree = "<group>"; };
 		C5FE58BD27BBC7BB00EAA944 /* OnTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5FE58C027BBC7BB00EAA944 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5FE58C227BBC7BB00EAA944 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				C5286E2027BBD6E200A00443 /* ScheduleView.swift */,
+				C54CC81B27BC4CC9002681D9 /* AddTaskView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -100,6 +105,7 @@
 			children = (
 				C5FE58C427BBC7BB00EAA944 /* MainTabBarController.swift */,
 				C5FE58D527BBC8F500EAA944 /* ScheduleViewController.swift */,
+				C54CC81927BC493C002681D9 /* AddTaskController.swift */,
 				C5FE58D727BBC90A00EAA944 /* CalendarViewController.swift */,
 				C5FE58D927BBC91500EAA944 /* MapViewController.swift */,
 			);
@@ -178,7 +184,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5FE58D827BBC90A00EAA944 /* CalendarViewController.swift in Sources */,
+				C54CC81C27BC4CC9002681D9 /* AddTaskView.swift in Sources */,
 				C5FE58DA27BBC91500EAA944 /* MapViewController.swift in Sources */,
+				C54CC81A27BC493C002681D9 /* AddTaskController.swift in Sources */,
 				C5FE58C527BBC7BB00EAA944 /* MainTabBarController.swift in Sources */,
 				C5286E2427BBD89100A00443 /* ScheduleViewController+UITableView.swift in Sources */,
 				C5286E2127BBD6E200A00443 /* ScheduleView.swift in Sources */,
