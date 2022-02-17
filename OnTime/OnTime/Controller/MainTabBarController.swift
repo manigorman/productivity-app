@@ -11,27 +11,29 @@ class MainTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupTabBar()
-        
         tabBar.isTranslucent = true
     }
     
+    override func viewDidLayoutSubviews() {
+    }
+    
     func setupTabBar() {
-        let scheduleController = createNavController(with: ScheduleViewController(), selected: UIImage(systemName: "house.fill"), unselected: UIImage(systemName: "house"))
+        let scheduleController = createNavController(with: ScheduleViewController(), selected: UIImage(systemName: "house.fill"), unselected: UIImage(systemName: "house"), title: "Tasks")
         
-        let calendarController = createNavController(with: CalendarViewController(), selected: UIImage(systemName: "calendar"), unselected: UIImage(systemName: "calendar"))
+        let calendarController = createNavController(with: CalendarViewController(), selected: UIImage(systemName: "calendar"), unselected: UIImage(systemName: "calendar"), title: "Calendar")
         
-        let mapController = createNavController(with: MapViewController(), selected: UIImage(systemName: "map.fill"), unselected: UIImage(systemName: "map"))
+        let mapController = createNavController(with: MapViewController(), selected: UIImage(systemName: "map.fill"), unselected: UIImage(systemName: "map"), title: "Map")
         
-        viewControllers = [scheduleController, calendarController, mapController]
+        self.setViewControllers([scheduleController, calendarController, mapController], animated: true)
     }
 
-    func createNavController(with vc: UIViewController, selected: UIImage?, unselected: UIImage?) -> UINavigationController {
+    func createNavController(with vc: UIViewController, selected: UIImage?, unselected: UIImage?, title: String) -> UINavigationController {
         let viewController = vc
         let navController = UINavigationController(rootViewController: viewController)
         navController.tabBarItem.image = unselected
         navController.tabBarItem.image = selected
+        navController.title = title
         
         return navController
     }

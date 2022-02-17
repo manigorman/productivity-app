@@ -42,7 +42,8 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellId", for: indexPath) as! TaskCell
-        cell.textLabel?.text = "fsf"
+        cell.label.text = "sfffdsf"
+        
         return cell
     }
     
