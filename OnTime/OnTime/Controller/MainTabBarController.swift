@@ -12,10 +12,11 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabBar()
-        tabBar.isTranslucent = true
+        //tabBar.isTranslucent = true
     }
     
     override func viewDidLayoutSubviews() {
+        
     }
     
     func setupTabBar() {
@@ -33,10 +34,10 @@ class MainTabBarController: UITabBarController {
         let navController = UINavigationController(rootViewController: viewController)
         navController.tabBarItem.image = unselected
         navController.tabBarItem.image = selected
+        navController.navigationBar.barStyle = .default
+        navigationController?.navigationBar.prefersLargeTitles = true
         navController.title = title
-        
         return navController
     }
 
 }
-

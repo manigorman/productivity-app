@@ -9,7 +9,11 @@ import UIKit
 
 class ScheduleViewController: UIViewController {
     
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     public var sharedConstraints = [NSLayoutConstraint]()
+    
+    public var models = [TaskListItem]()
     
     let tableView: UITableView = {
         let table = UITableView(frame: .null, style: .insetGrouped)
@@ -19,11 +23,17 @@ class ScheduleViewController: UIViewController {
         return table
     }()
     
+    var data: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemBackground
+        for i in 1...15 {
+            data.append("\(i)")
+        }
         
+        view.backgroundColor = .systemBackground
+        getAllItems()
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "My tasks"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddTaskController))
@@ -44,8 +54,8 @@ class ScheduleViewController: UIViewController {
     
     func setupConstraints() {
         sharedConstraints.append(contentsOf: [
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
@@ -53,10 +63,59 @@ class ScheduleViewController: UIViewController {
     
     @objc func showAddTaskController() {
         let vc = AddTaskController()
-        vc.stroka = "privet"
-        self.navigationController?.pushViewController(vc, animated: true)
+        vc.delegate = self
+        //self.navigationController?.pushViewController(vc, animated: true)
+        self.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
 
+    
+    func getAllItems() {
+        do {
+            models = try context.fetch(TaskListItem.fetchRequest())
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        catch {
+        }
+        
+    }
+    
+    func createItem(name: String) {
+        let newItem = TaskListItem(context: context)
+        newItem.name = name
+        newItem.createdAt = Date()
+        
+        do {
+            try context.save()
+            getAllItems()
+        }
+        catch {
+            
+        }
+    }
+    func deleteItem(item: TaskListItem) {
+        context.delete(item)
+        
+        do {
+            try context.save()
+            getAllItems()
+        }
+        catch {
+            
+        }
+    }
+    func updateItem(item: TaskListItem, newName: String) {
+        item.name = newName
+        do {
+            try context.save()
+        }
+        catch {
+            
+        }
+    }
+    
+    
 }
 
 class TaskCell: UITableViewCell {

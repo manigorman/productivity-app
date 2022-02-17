@@ -15,6 +15,7 @@ class MapViewController: UIViewController {
     
     let mapView: MKMapView = {
         let map = MKMapView()
+        //map.showsScale = true
         map.translatesAutoresizingMaskIntoConstraints = false
         return map
     }()
@@ -26,6 +27,7 @@ class MapViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "My map"
         setupUI()
+        setupConstraints()
         
         LocationManager.shared.getUserLocation { [weak self] location in
             DispatchQueue.main.async {
@@ -38,7 +40,6 @@ class MapViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        setupConstraints()
     }
     
     func setupUI() {
@@ -48,7 +49,7 @@ class MapViewController: UIViewController {
     func setupConstraints() {
         sharedConstraints.append(contentsOf: [
             mapView.topAnchor.constraint(equalTo: view.topAnchor),
-            mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            mapView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])

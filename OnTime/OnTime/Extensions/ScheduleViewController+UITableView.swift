@@ -9,11 +9,11 @@ import UIKit
 
 extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        3
+        1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        4
+        models.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -36,13 +36,27 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
 //        return headerView
 //    }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            //tableView.beginUpdates()
+            print(models)
+            self.deleteItem(item: models[indexPath.row])
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            //tableView.endUpdates()
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellId", for: indexPath) as! TaskCell
-        cell.label.text = "sfffdsf"
+        cell.label.text = models[indexPath.row].name
         
         return cell
     }

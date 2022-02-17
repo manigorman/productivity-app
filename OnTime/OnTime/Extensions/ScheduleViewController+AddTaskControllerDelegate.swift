@@ -5,9 +5,12 @@
 //  Created by Igor Manakov on 16.02.2022.
 //
 
-extension ScheduleViewController: AddTaskControllerDelegate {
-    func update(_ controller: AddTaskController,
-                info: String) {
-            print(info)
+extension ScheduleViewController: AddTaskDelegate {
+    func addTask(task: String) {
+        self.dismiss(animated: true) {
+            self.createItem(name: task)
+            print(task)
+            self.tableView.reloadData()
+        }
     }
 }

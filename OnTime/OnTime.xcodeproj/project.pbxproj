@@ -13,6 +13,9 @@
 		C5C782C427BD3AB700B65A50 /* ScheduleViewController+AddTaskControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C782C327BD3AB700B65A50 /* ScheduleViewController+AddTaskControllerDelegate.swift */; };
 		C5C782C627BE80D600B65A50 /* MapViewController+CLLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C782C527BE80D600B65A50 /* MapViewController+CLLocationManager.swift */; };
 		C5C782C827BEB23E00B65A50 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C782C727BEB23E00B65A50 /* LocationManager.swift */; };
+		C5C782CB27BED23300B65A50 /* TaskData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C5C782C927BED23300B65A50 /* TaskData.xcdatamodeld */; };
+		C5C782CE27BED37100B65A50 /* TaskListItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C782CC27BED37100B65A50 /* TaskListItem+CoreDataClass.swift */; };
+		C5C782CF27BED37100B65A50 /* TaskListItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C782CD27BED37100B65A50 /* TaskListItem+CoreDataProperties.swift */; };
 		C5FE58C127BBC7BB00EAA944 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE58C027BBC7BB00EAA944 /* AppDelegate.swift */; };
 		C5FE58C327BBC7BB00EAA944 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE58C227BBC7BB00EAA944 /* SceneDelegate.swift */; };
 		C5FE58C527BBC7BB00EAA944 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE58C427BBC7BB00EAA944 /* MainTabBarController.swift */; };
@@ -30,6 +33,9 @@
 		C5C782C327BD3AB700B65A50 /* ScheduleViewController+AddTaskControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleViewController+AddTaskControllerDelegate.swift"; sourceTree = "<group>"; };
 		C5C782C527BE80D600B65A50 /* MapViewController+CLLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+CLLocationManager.swift"; sourceTree = "<group>"; };
 		C5C782C727BEB23E00B65A50 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		C5C782CA27BED23300B65A50 /* TaskData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TaskData.xcdatamodel; sourceTree = "<group>"; };
+		C5C782CC27BED37100B65A50 /* TaskListItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskListItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		C5C782CD27BED37100B65A50 /* TaskListItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskListItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C5FE58BD27BBC7BB00EAA944 /* OnTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5FE58C027BBC7BB00EAA944 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5FE58C227BBC7BB00EAA944 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -70,6 +76,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		C5C782D027BED39500B65A50 /* TaskListItem */ = {
+			isa = PBXGroup;
+			children = (
+				C5C782CC27BED37100B65A50 /* TaskListItem+CoreDataClass.swift */,
+				C5C782CD27BED37100B65A50 /* TaskListItem+CoreDataProperties.swift */,
+			);
+			path = TaskListItem;
+			sourceTree = "<group>";
+		};
 		C5FE58B427BBC7BB00EAA944 = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +106,8 @@
 			children = (
 				C5FE58C027BBC7BB00EAA944 /* AppDelegate.swift */,
 				C5FE58C227BBC7BB00EAA944 /* SceneDelegate.swift */,
+				C5C782D027BED39500B65A50 /* TaskListItem */,
+				C5C782C927BED23300B65A50 /* TaskData.xcdatamodeld */,
 				C5286E2227BBD6E800A00443 /* View */,
 				C5FE58D427BBC7E400EAA944 /* Controller */,
 				C5286E2527BBD89A00A00443 /* Extensions */,
@@ -188,6 +205,8 @@
 			files = (
 				C5C782C427BD3AB700B65A50 /* ScheduleViewController+AddTaskControllerDelegate.swift in Sources */,
 				C5C782C627BE80D600B65A50 /* MapViewController+CLLocationManager.swift in Sources */,
+				C5C782CB27BED23300B65A50 /* TaskData.xcdatamodeld in Sources */,
+				C5C782CE27BED37100B65A50 /* TaskListItem+CoreDataClass.swift in Sources */,
 				C5FE58D827BBC90A00EAA944 /* CalendarViewController.swift in Sources */,
 				C5C782C827BEB23E00B65A50 /* LocationManager.swift in Sources */,
 				C5FE58DA27BBC91500EAA944 /* MapViewController.swift in Sources */,
@@ -195,6 +214,7 @@
 				C5FE58C527BBC7BB00EAA944 /* MainTabBarController.swift in Sources */,
 				C5286E2427BBD89100A00443 /* ScheduleViewController+UITableView.swift in Sources */,
 				C5FE58C127BBC7BB00EAA944 /* AppDelegate.swift in Sources */,
+				C5C782CF27BED37100B65A50 /* TaskListItem+CoreDataProperties.swift in Sources */,
 				C5FE58C327BBC7BB00EAA944 /* SceneDelegate.swift in Sources */,
 				C5FE58D627BBC8F500EAA944 /* ScheduleViewController.swift in Sources */,
 			);
@@ -406,6 +426,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C5C782C927BED23300B65A50 /* TaskData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C5C782CA27BED23300B65A50 /* TaskData.xcdatamodel */,
+			);
+			currentVersion = C5C782CA27BED23300B65A50 /* TaskData.xcdatamodel */;
+			path = TaskData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = C5FE58B527BBC7BB00EAA944 /* Project object */;
 }
