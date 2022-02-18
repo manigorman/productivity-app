@@ -94,9 +94,13 @@ class AddTaskController: UIViewController {
         
         taskNameField.becomeFirstResponder()
         setupViews()
-        setupConstraints()
+        setConstraints()
         setupDelegate()
-        
+        registerKeyboardNotification()
+    }
+    
+    deinit {
+        removeKeyboardNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -129,7 +133,7 @@ class AddTaskController: UIViewController {
         backgroundView.addSubview(stack)
     }
     
-    private func setupConstraints() {
+    private func setConstraints() {
         NSLayoutConstraint.activate([
                    scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
                    scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
@@ -140,15 +144,15 @@ class AddTaskController: UIViewController {
                NSLayoutConstraint.activate([
                    backgroundView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
                    backgroundView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-                   backgroundView.heightAnchor.constraint(equalTo: view.heightAnchor),
-                   backgroundView.widthAnchor.constraint(equalTo: view.widthAnchor)
+                   backgroundView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+                   backgroundView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
                ])
                
                NSLayoutConstraint.activate([
-                   stack.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
-                   stack.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
-                   stack.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 20),
-                   stack.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -20)
+                stack.centerXAnchor.constraint(equalTo: backgroundView.safeAreaLayoutGuide.centerXAnchor),
+                stack.centerYAnchor.constraint(equalTo: backgroundView.safeAreaLayoutGuide.centerYAnchor),
+                stack.leadingAnchor.constraint(equalTo: backgroundView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+                stack.trailingAnchor.constraint(equalTo: backgroundView.safeAreaLayoutGuide.trailingAnchor, constant: -20)
                ])
     }
     
@@ -170,6 +174,29 @@ class AddTaskController: UIViewController {
     
     @objc private func handleCancel() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Keyboard Observer
+    
+    private func registerKeyboardNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func removeKeyboardNotification() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillShow(notification: Notification) {
+        let userInfo = notification.userInfo
+        let keyboardHeight = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        scrollView.contentOffset = CGPoint(x: 0, y: keyboardHeight.height / 2)
+    }
+    
+    @objc private func keyboardWillHide(notification: Notification) {
+        scrollView.contentOffset = .zero
     }
 }
 

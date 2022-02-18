@@ -12,38 +12,50 @@ class TaskDaySection: UIView {
     
     let weeksDayLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     let dayInfoLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
+    // MARK: - Init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        setupViews()
+        setConstraints()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup() {
+    // MARK: - Setup
+    
+    func setupViews() {
         //addSubview(image)
         addSubview(weeksDayLabel)
         addSubview(dayInfoLabel)
+    }
+    
+    private func setConstraints() {
+        NSLayoutConstraint.activate([
+            weeksDayLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            weeksDayLabel.widthAnchor.constraint(equalTo: widthAnchor),
+            weeksDayLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5)
+        ])
         
-        weeksDayLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        weeksDayLabel.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        weeksDayLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5).isActive = true
-        
-        dayInfoLabel.topAnchor.constraint(equalTo: weeksDayLabel.bottomAnchor).isActive = true
-        dayInfoLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        dayInfoLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        dayInfoLabel.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        
+        NSLayoutConstraint.activate([
+            dayInfoLabel.topAnchor.constraint(equalTo: weeksDayLabel.bottomAnchor, constant: 5),
+            dayInfoLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            dayInfoLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            dayInfoLabel.widthAnchor.constraint(equalTo: widthAnchor)
+        ])
     }
 }
