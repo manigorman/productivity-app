@@ -8,82 +8,95 @@
 import UIKit
 
 protocol AddTaskDelegate {
-    func addTask(taskName: String, taskDescription: String, beginTime: String, endTime: String, location: String)
+    func addTask(taskName: String, taskDescription: String, beginTime: Date, endTime: String, location: String)
 }
 
 class AddTaskController: UIViewController {
 
     var delegate: AddTaskDelegate?
     
-    let taskNameField: UITextField = {
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+       
+        return scrollView
+    }()
+    
+    private let backgroundView: UIView = {
+        let view = UIView()
+        //view.backgroundColor = .systemBackground
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private let taskNameField: UITextField = {
         let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Что надо сделать?"
         textField.backgroundColor = .systemGray6
-        
-        return textField
-    }()
-    
-    let taskDescriptionView: UITextView = {
-        let textField = UITextView()
+        textField.borderStyle = .roundedRect
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.layer.shadowOpacity = 1
-        textField.layer.shadowRadius = 4.0
-        textField.layer.shadowColor = UIColor.black.cgColor
         
         return textField
     }()
     
-    let importanceSegmentedControl: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["1", "2", "3"])
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        segmentedControl.selectedSegmentIndex = 0
+    private let taskDescriptionField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "А конкретнее?"
+        textField.backgroundColor = .systemGray6
+        textField.borderStyle = .roundedRect
+        textField.translatesAutoresizingMaskIntoConstraints = false
         
+        return textField
+    }()
+    
+    private let importanceSegmentedControl: UISegmentedControl = {
+        let segmentedControl = UISegmentedControl(items: ["1", "2", "3"])
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         
         return segmentedControl
     }()
     
-    let datePicker: UIDatePicker = {
+    private let datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
-        datePicker.translatesAutoresizingMaskIntoConstraints = false
-        datePicker.preferredDatePickerStyle = .wheels
+        datePicker.preferredDatePickerStyle = .automatic
         datePicker.datePickerMode = .dateAndTime
-        //datePicker.locale = .current
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        
         return datePicker
     }()
     
-    let locationField: UITextField = {
+    private let locationField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Где?"
         textField.backgroundColor = .systemGray6
+        textField.borderStyle = .roundedRect
         
         return textField
     }()
     
-    let stack: UIStackView = {
+    private let stack: UIStackView = {
         let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
+        stack.spacing = 10
         stack.distribution = .fillEqually
-        
+        stack.translatesAutoresizingMaskIntoConstraints = false
+
         return stack
     }()
     
-    public var sharedConstraints = [NSLayoutConstraint]()
-    
-    var stroka: String = ""
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemBackground
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDone))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
-        setupUI()
+        taskNameField.becomeFirstResponder()
+        setupViews()
         setupConstraints()
+        setupDelegate()
         
-        NSLayoutConstraint.activate(sharedConstraints)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,50 +109,80 @@ class AddTaskController: UIViewController {
         print("willdisappear")
     }
     
+    // MARK: - Setup
+    
+    private func setupViews() {
+        view.backgroundColor = .systemBackground
+        title = "New Task"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDone))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(backgroundView)
+        
+        stack.addArrangedSubview(taskNameField)
+        stack.addArrangedSubview(taskDescriptionField)
+        stack.addArrangedSubview(importanceSegmentedControl)
+        stack.addArrangedSubview(datePicker)
+        stack.addArrangedSubview(locationField)
+        
+        backgroundView.addSubview(stack)
+    }
+    
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+                   scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+                   scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+                   scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+                   scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+               ])
+               
+               NSLayoutConstraint.activate([
+                   backgroundView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
+                   backgroundView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+                   backgroundView.heightAnchor.constraint(equalTo: view.heightAnchor),
+                   backgroundView.widthAnchor.constraint(equalTo: view.widthAnchor)
+               ])
+               
+               NSLayoutConstraint.activate([
+                   stack.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
+                   stack.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
+                   stack.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 20),
+                   stack.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -20)
+               ])
+    }
+    
+    private func setupDelegate() {
+        taskNameField.delegate = self
+        locationField.delegate = self
+        taskDescriptionField.delegate = self
+    }
+    
     // MARK: - Selectors
     
-    @objc func handleDone() {
+    @objc private func handleDone() {
         guard let taskName = taskNameField.text, taskNameField.hasText else {
             print("Handle error here...")
             return
         }
-        delegate?.addTask(taskName: taskName, taskDescription: taskDescriptionView.text, beginTime: "10:00", endTime: "11:30", location: locationField.text!)
+        delegate?.addTask(taskName: taskName, taskDescription: taskDescriptionField.text!, beginTime: datePicker.date, endTime: "11:30", location: locationField.text!)
     }
     
-    @objc func handleCancel() {
+    @objc private func handleCancel() {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    func setupUI() {
-        view.addSubview(stack)
-        
-        stack.addArrangedSubview(taskNameField)
-        taskNameField.becomeFirstResponder()
-        //taskNameField.delegate = self
-        taskNameField.sizeToFit()
-        
-        stack.addArrangedSubview(taskDescriptionView)
-        stack.addArrangedSubview(importanceSegmentedControl)
-        stack.addArrangedSubview(datePicker)
-        stack.addArrangedSubview(locationField)
-        stack.layer.cornerRadius = 10
-        stack.spacing = 20
-    }
-    
-    func setupConstraints() {
-        sharedConstraints.append(contentsOf: [
-            stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            stack.widthAnchor.constraint(equalToConstant: view.frame.width - 64),
-            stack.heightAnchor.constraint(equalToConstant: view.frame.height - 40)
-        ])
-    }
-
 }
 
-extension AddTaskController: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        print(textView.text!)
+extension AddTaskController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        //taskNameField.resignFirstResponder()
+        taskDescriptionField.resignFirstResponder()
+        locationField.resignFirstResponder()
         
+        return true
     }
 }

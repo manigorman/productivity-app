@@ -12,7 +12,7 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabBar()
-        //tabBar.isTranslucent = true
+        tabBar.isTranslucent = true
     }
     
     override func viewDidLayoutSubviews() {

@@ -13,6 +13,8 @@
 		C5B910D127BFE6EF00CB3E31 /* TaskListItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B910CF27BFE6EF00CB3E31 /* TaskListItem+CoreDataClass.swift */; };
 		C5B910D227BFE6EF00CB3E31 /* TaskListItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B910D027BFE6EF00CB3E31 /* TaskListItem+CoreDataProperties.swift */; };
 		C5B910D427BFEB6400CB3E31 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B910D327BFEB6400CB3E31 /* TaskCell.swift */; };
+		C5B910D627C0056600CB3E31 /* TaskDaySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B910D527C0056600CB3E31 /* TaskDaySection.swift */; };
+		C5B910DC27C03A1000CB3E31 /* DetailTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B910DB27C03A1000CB3E31 /* DetailTaskViewController.swift */; };
 		C5C782C427BD3AB700B65A50 /* ScheduleViewController+AddTaskControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C782C327BD3AB700B65A50 /* ScheduleViewController+AddTaskControllerDelegate.swift */; };
 		C5C782C627BE80D600B65A50 /* MapViewController+CLLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C782C527BE80D600B65A50 /* MapViewController+CLLocationManager.swift */; };
 		C5C782C827BEB23E00B65A50 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C782C727BEB23E00B65A50 /* LocationManager.swift */; };
@@ -34,6 +36,8 @@
 		C5B910CF27BFE6EF00CB3E31 /* TaskListItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskListItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C5B910D027BFE6EF00CB3E31 /* TaskListItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskListItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C5B910D327BFEB6400CB3E31 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
+		C5B910D527C0056600CB3E31 /* TaskDaySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDaySection.swift; sourceTree = "<group>"; };
+		C5B910DB27C03A1000CB3E31 /* DetailTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTaskViewController.swift; sourceTree = "<group>"; };
 		C5C782C327BD3AB700B65A50 /* ScheduleViewController+AddTaskControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleViewController+AddTaskControllerDelegate.swift"; sourceTree = "<group>"; };
 		C5C782C527BE80D600B65A50 /* MapViewController+CLLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+CLLocationManager.swift"; sourceTree = "<group>"; };
 		C5C782C727BEB23E00B65A50 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -65,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				C5B910D327BFEB6400CB3E31 /* TaskCell.swift */,
+				C5B910D527C0056600CB3E31 /* TaskDaySection.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -84,6 +89,7 @@
 			children = (
 				C5B910CF27BFE6EF00CB3E31 /* TaskListItem+CoreDataClass.swift */,
 				C5B910D027BFE6EF00CB3E31 /* TaskListItem+CoreDataProperties.swift */,
+				C5C782C727BEB23E00B65A50 /* LocationManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -128,9 +134,9 @@
 				C5FE58C427BBC7BB00EAA944 /* MainTabBarController.swift */,
 				C5FE58D527BBC8F500EAA944 /* ScheduleViewController.swift */,
 				C54CC81927BC493C002681D9 /* AddTaskController.swift */,
+				C5B910DB27C03A1000CB3E31 /* DetailTaskViewController.swift */,
 				C5FE58D727BBC90A00EAA944 /* CalendarViewController.swift */,
 				C5FE58D927BBC91500EAA944 /* MapViewController.swift */,
-				C5C782C727BEB23E00B65A50 /* LocationManager.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -211,8 +217,10 @@
 				C5C782CB27BED23300B65A50 /* TaskData.xcdatamodeld in Sources */,
 				C5B910D127BFE6EF00CB3E31 /* TaskListItem+CoreDataClass.swift in Sources */,
 				C5B910D427BFEB6400CB3E31 /* TaskCell.swift in Sources */,
+				C5B910D627C0056600CB3E31 /* TaskDaySection.swift in Sources */,
 				C5FE58D827BBC90A00EAA944 /* CalendarViewController.swift in Sources */,
 				C5C782C827BEB23E00B65A50 /* LocationManager.swift in Sources */,
+				C5B910DC27C03A1000CB3E31 /* DetailTaskViewController.swift in Sources */,
 				C5FE58DA27BBC91500EAA944 /* MapViewController.swift in Sources */,
 				C54CC81A27BC493C002681D9 /* AddTaskController.swift in Sources */,
 				C5FE58C527BBC7BB00EAA944 /* MainTabBarController.swift in Sources */,

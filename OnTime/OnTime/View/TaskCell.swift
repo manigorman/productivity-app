@@ -8,47 +8,42 @@
 import UIKit
 class TaskCell: UITableViewCell {
     
-//    let image: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.image = UIImage(systemName: "house")!
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        return imageView
-//    }()
-    
     let beginTimeLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .systemGray
         label.translatesAutoresizingMaskIntoConstraints = false
+        
         return label
     }()
     
     let endTimeLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .systemGray2
         label.translatesAutoresizingMaskIntoConstraints = false
+        
         return label
     }()
     
     let taskNameLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .systemGray3
         label.translatesAutoresizingMaskIntoConstraints = false
+        
         return label
     }()
     
     let taskDescriptionLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .systemGray4
         label.translatesAutoresizingMaskIntoConstraints = false
+        
         return label
     }()
     
     let locationLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .systemGray5
         label.translatesAutoresizingMaskIntoConstraints = false
+        
         return label
     }()
+    
+    // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -59,8 +54,9 @@ class TaskCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup() {
-        //addSubview(image)
+    // MARK: - Setup
+    
+    private func setup() {
         addSubview(beginTimeLabel)
         addSubview(endTimeLabel)
         addSubview(taskNameLabel)
@@ -68,14 +64,14 @@ class TaskCell: UITableViewCell {
         addSubview(locationLabel)
         
         beginTimeLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        beginTimeLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.1).isActive = true
+        beginTimeLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2).isActive = true
         beginTimeLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         beginTimeLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5).isActive = true
         
         endTimeLabel.topAnchor.constraint(equalTo: beginTimeLabel.bottomAnchor).isActive = true
         endTimeLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         endTimeLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        endTimeLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.1).isActive = true
+        endTimeLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2).isActive = true
         
         taskNameLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
         taskNameLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4).isActive = true

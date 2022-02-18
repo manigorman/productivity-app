@@ -12,61 +12,76 @@ class ScheduleViewController: UIViewController {
     // Core Data context
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    public var sharedConstraints = [NSLayoutConstraint]()
-    
     public var models = [TaskListItem]()
     
     let tableView: UITableView = {
         let table = UITableView(frame: .null, style: .insetGrouped)
-        //table.separatorStyle = .none
-        //table.backgroundColor = .systemBackground
+        table.backgroundColor = .systemBackground
+        table.register(TaskCell.self, forCellReuseIdentifier: "taskCellId")
         table.translatesAutoresizingMaskIntoConstraints = false
+        
         return table
     }()
     
-    let taskCell = TaskCell()
+    private let searchController = UISearchController(searchResultsController: nil)
     
-    // Life-cycle
+    private let taskCell = TaskCell()
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemBackground
         getAllItems()
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "My tasks"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddTaskController))
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(TaskCell.self, forCellReuseIdentifier: "taskCellId")
-        
-        setupUI()
+        setNavigationBar()
+        setupViews()
         setupConstraints()
-        
-        NSLayoutConstraint.activate(sharedConstraints)
-    }    
+        setupDelegate()
+    }
     
-    // Interface
-    func setupUI() {
+    // MARK: - Setup
+    
+    private func setupViews() {
+        view.backgroundColor = .systemBackground
         view.addSubview(tableView)
     }
     
-    func setupConstraints() {
-        sharedConstraints.append(contentsOf: [
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
     
-    @objc func showAddTaskController() {
+    private func setupDelegate() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        searchController.searchBar.delegate = self
+    }
+    
+    private func setNavigationBar() {
+        navigationItem.title = "My tasks"
+        navigationItem.searchController = searchController
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddTaskController))
+        searchController.searchBar.placeholder = "Search"
+        searchController.obscuresBackgroundDuringPresentation = false
+    }
+    
+    // MARK: - Selectors
+    
+    @objc private func showAddTaskController() {
         let vc = AddTaskController()
         vc.delegate = self
         self.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
     
-    // Working with Core Data
+    // MARK: - Core Data
+    
     func getAllItems() {
         do {
             models = try context.fetch(TaskListItem.fetchRequest())
@@ -78,12 +93,12 @@ class ScheduleViewController: UIViewController {
         }
     }
     
-    func createItem(taskName: String, taskDescription: String, beginTime: String, endTime: String, location: String) {
+    func createItem(taskName: String, taskDescription: String, beginTime: Date, endTime: String, location: String) {
         let newItem = TaskListItem(context: context)
         newItem.taskName = taskName
         newItem.taskDescription = taskDescription
         newItem.priority = 0
-        //newItem.beginTime = .now
+        newItem.beginTime = beginTime
         //newItem.endTime = .now
         //newItem.location =
         
@@ -116,5 +131,11 @@ class ScheduleViewController: UIViewController {
         catch {
             
         }
+    }
+}
+
+extension ScheduleViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
     }
 }
