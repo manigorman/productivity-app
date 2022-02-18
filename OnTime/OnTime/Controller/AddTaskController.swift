@@ -8,14 +8,14 @@
 import UIKit
 
 protocol AddTaskDelegate {
-    func addTask(task: String)
+    func addTask(taskName: String, taskDescription: String, beginTime: String, endTime: String, location: String)
 }
 
 class AddTaskController: UIViewController {
 
     var delegate: AddTaskDelegate?
     
-    let taskTextField: UITextField = {
+    let taskNameField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Что надо сделать?"
@@ -24,7 +24,7 @@ class AddTaskController: UIViewController {
         return textField
     }()
     
-    let taskTextView: UITextView = {
+    let taskDescriptionView: UITextView = {
         let textField = UITextView()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.layer.shadowOpacity = 1
@@ -50,6 +50,15 @@ class AddTaskController: UIViewController {
         datePicker.datePickerMode = .dateAndTime
         //datePicker.locale = .current
         return datePicker
+    }()
+    
+    let locationField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Где?"
+        textField.backgroundColor = .systemGray6
+        
+        return textField
     }()
     
     let stack: UIStackView = {
@@ -90,12 +99,11 @@ class AddTaskController: UIViewController {
     // MARK: - Selectors
     
     @objc func handleDone() {
-        guard let fullName = taskTextField.text, taskTextField.hasText else {
+        guard let taskName = taskNameField.text, taskNameField.hasText else {
             print("Handle error here...")
             return
         }
-        print(fullName)
-        delegate?.addTask(task: fullName)
+        delegate?.addTask(taskName: taskName, taskDescription: taskDescriptionView.text, beginTime: "10:00", endTime: "11:30", location: locationField.text!)
     }
     
     @objc func handleCancel() {
@@ -104,12 +112,16 @@ class AddTaskController: UIViewController {
     
     func setupUI() {
         view.addSubview(stack)
-        stack.addArrangedSubview(taskTextField)
-        taskTextField.becomeFirstResponder()
-        taskTextView.delegate = self
-        taskTextView.sizeToFit()
+        
+        stack.addArrangedSubview(taskNameField)
+        taskNameField.becomeFirstResponder()
+        //taskNameField.delegate = self
+        taskNameField.sizeToFit()
+        
+        stack.addArrangedSubview(taskDescriptionView)
         stack.addArrangedSubview(importanceSegmentedControl)
         stack.addArrangedSubview(datePicker)
+        stack.addArrangedSubview(locationField)
         stack.layer.cornerRadius = 10
         stack.spacing = 20
     }
@@ -118,7 +130,8 @@ class AddTaskController: UIViewController {
         sharedConstraints.append(contentsOf: [
             stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            stack.widthAnchor.constraint(equalToConstant: view.frame.width - 64)
+            stack.widthAnchor.constraint(equalToConstant: view.frame.width - 64),
+            stack.heightAnchor.constraint(equalToConstant: view.frame.height - 40)
         ])
     }
 

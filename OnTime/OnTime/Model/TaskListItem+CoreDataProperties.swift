@@ -2,12 +2,13 @@
 //  TaskListItem+CoreDataProperties.swift
 //  OnTime
 //
-//  Created by Igor Manakov on 17.02.2022.
+//  Created by Igor Manakov on 18.02.2022.
 //
 //
 
 import Foundation
 import CoreData
+import CoreLocation
 
 
 extension TaskListItem {
@@ -16,8 +17,12 @@ extension TaskListItem {
         return NSFetchRequest<TaskListItem>(entityName: "TaskListItem")
     }
 
-    @NSManaged public var name: String?
-    @NSManaged public var createdAt: Date?
+    @NSManaged public var taskName: String?
+    @NSManaged public var taskDescription: String?
+    @NSManaged public var beginTime: Date?
+    @NSManaged public var endTime: Date?
+    @NSManaged public var priority: Int16
+    @NSManaged public var location: CLLocation?
 
 }
 

@@ -6,10 +6,9 @@
 //
 
 extension ScheduleViewController: AddTaskDelegate {
-    func addTask(task: String) {
+    func addTask(taskName: String, taskDescription: String, beginTime: String, endTime: String, location: String) {
         self.dismiss(animated: true) {
-            self.createItem(name: task)
-            print(task)
+            self.createItem(taskName: taskName, taskDescription: taskDescription, beginTime: beginTime, endTime: endTime, location: location)
             self.tableView.reloadData()
         }
     }

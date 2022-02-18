@@ -9,6 +9,7 @@ import UIKit
 
 class ScheduleViewController: UIViewController {
     
+    // Core Data context
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     public var sharedConstraints = [NSLayoutConstraint]()
@@ -23,14 +24,11 @@ class ScheduleViewController: UIViewController {
         return table
     }()
     
-    var data: [String] = []
+    let taskCell = TaskCell()
     
+    // Life-cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        for i in 1...15 {
-            data.append("\(i)")
-        }
         
         view.backgroundColor = .systemBackground
         getAllItems()
@@ -48,6 +46,7 @@ class ScheduleViewController: UIViewController {
         NSLayoutConstraint.activate(sharedConstraints)
     }    
     
+    // Interface
     func setupUI() {
         view.addSubview(tableView)
     }
@@ -64,11 +63,10 @@ class ScheduleViewController: UIViewController {
     @objc func showAddTaskController() {
         let vc = AddTaskController()
         vc.delegate = self
-        //self.navigationController?.pushViewController(vc, animated: true)
         self.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
-
     
+    // Working with Core Data
     func getAllItems() {
         do {
             models = try context.fetch(TaskListItem.fetchRequest())
@@ -78,13 +76,16 @@ class ScheduleViewController: UIViewController {
         }
         catch {
         }
-        
     }
     
-    func createItem(name: String) {
+    func createItem(taskName: String, taskDescription: String, beginTime: String, endTime: String, location: String) {
         let newItem = TaskListItem(context: context)
-        newItem.name = name
-        newItem.createdAt = Date()
+        newItem.taskName = taskName
+        newItem.taskDescription = taskDescription
+        newItem.priority = 0
+        //newItem.beginTime = .now
+        //newItem.endTime = .now
+        //newItem.location =
         
         do {
             try context.save()
@@ -94,6 +95,7 @@ class ScheduleViewController: UIViewController {
             
         }
     }
+    
     func deleteItem(item: TaskListItem) {
         context.delete(item)
         
@@ -105,53 +107,14 @@ class ScheduleViewController: UIViewController {
             
         }
     }
+    
     func updateItem(item: TaskListItem, newName: String) {
-        item.name = newName
+        item.taskName = newName
         do {
             try context.save()
         }
         catch {
             
         }
-    }
-    
-    
-}
-
-class TaskCell: UITableViewCell {
-    
-    let image: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "house")!
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    let label: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setup()
-    }
-    
-    func setup() {
-        addSubview(image)
-        addSubview(label)
-        image.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        image.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        image.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        image.widthAnchor.constraint(equalTo: image.heightAnchor).isActive = true
-        label.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        label.leadingAnchor.constraint(equalTo: image.trailingAnchor).isActive = true
-        label.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

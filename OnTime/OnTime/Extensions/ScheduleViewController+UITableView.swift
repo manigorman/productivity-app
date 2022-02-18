@@ -17,7 +17,7 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        60
+        150
     }
     
 //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -40,14 +40,28 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
         true
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            //tableView.beginUpdates()
-            print(models)
-            self.deleteItem(item: models[indexPath.row])
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            //tableView.endUpdates()
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            //tableView.beginUpdates()
+//            print(models)
+//            self.deleteItem(item: models[indexPath.row])
+//            tableView.deleteRows(at: [indexPath], with: .automatic)
+//            //tableView.endUpdates()
+//        }
+//    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive, title: "Delete") { action, view, completionHandler in
+            let taskToRemove = self.models[indexPath.row]
+            self.context.delete(taskToRemove)
+            do {
+                try self.context.save()
+            }
+            catch {
+            }
+            self.getAllItems()
         }
+        return UISwipeActionsConfiguration(actions: [action])
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -56,7 +70,11 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellId", for: indexPath) as! TaskCell
-        cell.label.text = models[indexPath.row].name
+        cell.taskNameLabel.text = models[indexPath.row].taskName
+        cell.taskDescriptionLabel.text = models[indexPath.row].taskDescription
+        cell.beginTimeLabel.text = "10:00"
+        cell.endTimeLabel.text = "11:30"
+        cell.locationLabel.text = "5-th Avenue, 156 building"
         
         return cell
     }
