@@ -60,7 +60,7 @@ class MapViewController: UIViewController {
         let pin = MKPointAnnotation()
         pin.coordinate = location.coordinate
         
-        mapView.setRegion(MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.7, longitudeDelta: 0.7)), animated: true)
+        mapView.setRegion(MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)), animated: true)
         mapView.addAnnotation(pin)
         LocationManager.shared.resolveLocationName(with: location) { [weak self] locationName in
             //self?.title = locationName

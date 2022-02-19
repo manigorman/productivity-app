@@ -12,13 +12,13 @@ protocol AddTaskDelegate {
 }
 
 class AddTaskController: UIViewController {
-
+    
     var delegate: AddTaskDelegate?
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-       
+        
         return scrollView
     }()
     
@@ -33,35 +33,81 @@ class AddTaskController: UIViewController {
     private let taskNameField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Что надо сделать?"
-        textField.backgroundColor = .systemGray6
+        //textField.backgroundColor = .systemGray6
         textField.borderStyle = .roundedRect
         textField.translatesAutoresizingMaskIntoConstraints = false
         
         return textField
+    }()
+    
+    private let taskNameRequiredLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Required field"
+        label.font = UIFont.systemFont(ofSize: 16)
+        
+        return label
     }()
     
     private let taskDescriptionField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "А конкретнее?"
-        textField.backgroundColor = .systemGray6
+        //textField.backgroundColor = .systemGray6
         textField.borderStyle = .roundedRect
         textField.translatesAutoresizingMaskIntoConstraints = false
         
         return textField
     }()
     
+    private let importanceLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Importance"
+        label.font = UIFont.systemFont(ofSize: 16)
+        
+        return label
+    }()
+    
+    private let label: UILabel = {
+        let label = UILabel()
+        label.text = "Importance"
+        label.font = UIFont.systemFont(ofSize: 16)
+        
+        return label
+    }()
+    
+    private let label2: UILabel = {
+        let label = UILabel()
+        label.text = "Importance"
+        label.font = UIFont.systemFont(ofSize: 16)
+        
+        return label
+    }()
+    
     private let importanceSegmentedControl: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["1", "2", "3"])
+        let lowPriorityImage = UIImage(systemName: "arrow.down")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+        let highPriorityImage = UIImage(systemName: "exclamationmark.3")?.withTintColor(.systemGreen, renderingMode: .alwaysOriginal)
+        
+        let segmentedControl = UISegmentedControl(items: [lowPriorityImage ?? "Low", "No", highPriorityImage ?? "High"])
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         
         return segmentedControl
     }()
     
+    private let importanceStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        //stack.spacing = 10
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stack
+    }()
+    
     private let datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
-        datePicker.preferredDatePickerStyle = .automatic
+        datePicker.preferredDatePickerStyle = .compact
         datePicker.datePickerMode = .dateAndTime
+        
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         
         return datePicker
@@ -71,7 +117,7 @@ class AddTaskController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Где?"
-        textField.backgroundColor = .systemGray6
+        //textField.backgroundColor = .systemGray6
         textField.borderStyle = .roundedRect
         
         return textField
@@ -83,7 +129,7 @@ class AddTaskController: UIViewController {
         stack.spacing = 10
         stack.distribution = .fillEqually
         stack.translatesAutoresizingMaskIntoConstraints = false
-
+        
         return stack
     }()
     
@@ -92,7 +138,7 @@ class AddTaskController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        taskNameField.becomeFirstResponder()
+        //taskNameField.becomeFirstResponder()
         setupViews()
         setConstraints()
         setupDelegate()
@@ -123,37 +169,42 @@ class AddTaskController: UIViewController {
         
         view.addSubview(scrollView)
         scrollView.addSubview(backgroundView)
-        
         stack.addArrangedSubview(taskNameField)
+        stack.addArrangedSubview(taskNameRequiredLabel)
         stack.addArrangedSubview(taskDescriptionField)
-        stack.addArrangedSubview(importanceSegmentedControl)
+        importanceStack.addArrangedSubview(importanceLabel)
+        importanceStack.addArrangedSubview(importanceSegmentedControl)
+        stack.addArrangedSubview(importanceStack)
         stack.addArrangedSubview(datePicker)
         stack.addArrangedSubview(locationField)
+        
+        stack.addArrangedSubview(label)
+        stack.addArrangedSubview(label2)
         
         backgroundView.addSubview(stack)
     }
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-                   scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-                   scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-                   scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
-                   scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
-               ])
-               
-               NSLayoutConstraint.activate([
-                   backgroundView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
-                   backgroundView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-                   backgroundView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
-                   backgroundView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-               ])
-               
-               NSLayoutConstraint.activate([
-                stack.centerXAnchor.constraint(equalTo: backgroundView.safeAreaLayoutGuide.centerXAnchor),
-                stack.centerYAnchor.constraint(equalTo: backgroundView.safeAreaLayoutGuide.centerYAnchor),
-                stack.leadingAnchor.constraint(equalTo: backgroundView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-                stack.trailingAnchor.constraint(equalTo: backgroundView.safeAreaLayoutGuide.trailingAnchor, constant: -20)
-               ])
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        ])
+        
+        NSLayoutConstraint.activate([
+            backgroundView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
+            backgroundView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            backgroundView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+            backgroundView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            stack.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
+            stack.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
+            stack.leadingAnchor.constraint(equalTo: backgroundView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            stack.trailingAnchor.constraint(equalTo: backgroundView.safeAreaLayoutGuide.trailingAnchor, constant: -20)
+        ])
     }
     
     private func setupDelegate() {
@@ -166,17 +217,29 @@ class AddTaskController: UIViewController {
     
     @objc private func handleDone() {
         guard let taskName = taskNameField.text, taskNameField.hasText else {
-            print("Handle error here...")
+            alertTaskHandleError()
             return
         }
+        taskNameField.resignFirstResponder()
+        taskDescriptionField.resignFirstResponder()
+        locationField.resignFirstResponder()
         delegate?.addTask(taskName: taskName, taskDescription: taskDescriptionField.text!, beginTime: datePicker.date, endTime: "11:30", location: locationField.text!)
+    }
+    
+    private func alertTaskHandleError() {
+        let alert = UIAlertController(title: "Add task error", message: "Please enter all required information to create a new task.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        //DispatchQueue.main.async {
+        self.taskNameRequiredLabel.textColor = .red
+        //}
+        present(alert, animated: true)
     }
     
     @objc private func handleCancel() {
         self.dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - Keyboard Observer
+    // MARK: - Keyboard Observers
     
     private func registerKeyboardNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -201,14 +264,21 @@ class AddTaskController: UIViewController {
 }
 
 extension AddTaskController: UITextFieldDelegate {
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        //taskNameField.resignFirstResponder()
-        taskDescriptionField.resignFirstResponder()
-        locationField.resignFirstResponder()
+        if textField == taskNameField {
+            taskDescriptionField.becomeFirstResponder()
+        }
+        else if textField == taskDescriptionField {
+            locationField.becomeFirstResponder()
+        }
+        else if textField == locationField {
+            handleDone()
+        }
         
         return true
     }

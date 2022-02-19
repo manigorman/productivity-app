@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ScheduleViewController: UIViewController {
     
@@ -17,6 +18,7 @@ class ScheduleViewController: UIViewController {
     let tableView: UITableView = {
         let table = UITableView(frame: .null, style: .insetGrouped)
         //table.backgroundColor = .systemBackground
+        
         table.register(TaskCell.self, forCellReuseIdentifier: "taskCellId")
         table.translatesAutoresizingMaskIntoConstraints = false
         
@@ -25,7 +27,6 @@ class ScheduleViewController: UIViewController {
     
     private let searchController = UISearchController(searchResultsController: nil)
     
-    private let taskCell = TaskCell()
     
     // MARK: - Life Cycle
     
@@ -49,10 +50,10 @@ class ScheduleViewController: UIViewController {
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
     
@@ -84,10 +85,28 @@ class ScheduleViewController: UIViewController {
     
     func getAllItems() {
         do {
-            models = try context.fetch(TaskListItem.fetchRequest())
+            
+            let request = TaskListItem.fetchRequest() as NSFetchRequest<TaskListItem>
+            
+            // Set filtering and sorting on the request
+            
+            let startDate = Date.now
+            //let endDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: startDate)!
+            let endDate = Calendar.current.date(byAdding: .weekday, value: 1, to: startDate)!
+            print(startDate, endDate)
+            //let pred = NSPredicate(format: "(beginTime >= %@) AND (beginTime <= %@)", startDate as NSDate, endDate as NSDate)
+            //let pred = NSPredicate(format: "taskName CONTAINS %@", "Go")
+            let pred = NSPredicate(format: "(beginTime >= %@) AND (beginTime <= %@)", startDate as NSDate, endDate as NSDate)
+            request.predicate = pred
+            
+            let sort = NSSortDescriptor(key: "beginTime", ascending: true)
+            request.sortDescriptors = [sort]
+            
+            self.models = try context.fetch(request)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
+            //print(models[0].beginTime)
         }
         catch {
         }

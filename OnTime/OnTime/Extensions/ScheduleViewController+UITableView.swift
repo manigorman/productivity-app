@@ -39,6 +39,7 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     //    }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { action, view, completionHandler in
             let taskToRemove = self.models[indexPath.row]
             self.context.delete(taskToRemove)
@@ -50,8 +51,9 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
             self.getAllItems()
         }
         let editAction = UIContextualAction(style: .normal, title: "Edit") { action, view, completionHandler in
-            
         }
+        editAction.backgroundColor = .systemGreen
+        
         return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
     }
     
@@ -73,13 +75,12 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        "Do's"
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailTaskViewController = DetailTaskViewController()
         navigationController?.pushViewController(detailTaskViewController, animated: true)
     }
     
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//
+//    }
 }

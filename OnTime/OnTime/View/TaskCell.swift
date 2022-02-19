@@ -55,6 +55,24 @@ class TaskCell: UITableViewCell {
         return label
     }()
     
+    let timeStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 5
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stack
+    }()
+    
+    let taskInfoStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 5
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stack
+    }()
+    
     // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -70,42 +88,40 @@ class TaskCell: UITableViewCell {
     // MARK: - Setup
     
     private func setupViews() {
-        addSubview(beginTimeLabel)
-        addSubview(endTimeLabel)
-        addSubview(taskNameLabel)
-        addSubview(taskDescriptionLabel)
-        addSubview(locationLabel)
+        timeStack.addArrangedSubview(beginTimeLabel)
+        timeStack.addArrangedSubview(endTimeLabel)
+        taskInfoStack.addArrangedSubview(timeStack)
+        taskInfoStack.addArrangedSubview(taskNameLabel)
+        taskInfoStack.addArrangedSubview(taskDescriptionLabel)
+        taskInfoStack.addArrangedSubview(locationLabel)
+        addSubview(timeStack)
+        addSubview(taskInfoStack)
     }
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            beginTimeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            beginTimeLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2),
-            beginTimeLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            beginTimeLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5)])
+            timeStack.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            timeStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            timeStack.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2)
+        ])
         
         NSLayoutConstraint.activate([
-        endTimeLabel.topAnchor.constraint(equalTo: beginTimeLabel.bottomAnchor),
-        endTimeLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-        endTimeLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-        endTimeLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2)])
+            taskInfoStack.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            taskInfoStack.leadingAnchor.constraint(equalTo: timeStack.trailingAnchor, constant: 10),
+            taskInfoStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            taskInfoStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
+        ])
         
-        NSLayoutConstraint.activate([
-        taskNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-        taskNameLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4),
-        taskNameLabel.leadingAnchor.constraint(equalTo: beginTimeLabel.trailingAnchor, constant: 10),
-        taskNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)])
-        
-        NSLayoutConstraint.activate([
-        taskDescriptionLabel.topAnchor.constraint(equalTo: taskNameLabel.bottomAnchor),
-        taskDescriptionLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4),
-        taskDescriptionLabel.leadingAnchor.constraint(equalTo: endTimeLabel.trailingAnchor, constant: 10),
-        taskDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)])
-        
-        NSLayoutConstraint.activate([
-        locationLabel.topAnchor.constraint(equalTo: taskDescriptionLabel.bottomAnchor),
-        locationLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
-        locationLabel.leadingAnchor.constraint(equalTo: endTimeLabel.trailingAnchor, constant: 10),
-        locationLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)])
+//        NSLayoutConstraint.activate([
+//            taskDescriptionLabel.topAnchor.constraint(equalTo: taskNameLabel.bottomAnchor),
+//            taskDescriptionLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4),
+//            taskDescriptionLabel.leadingAnchor.constraint(equalTo: timeStack.trailingAnchor, constant: 10),
+//            taskDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)])
+//
+//        NSLayoutConstraint.activate([
+//            locationLabel.topAnchor.constraint(equalTo: taskDescriptionLabel.bottomAnchor),
+//            locationLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+//            locationLabel.leadingAnchor.constraint(equalTo: timeStack.trailingAnchor, constant: 10),
+//            locationLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)])
     }
 }
