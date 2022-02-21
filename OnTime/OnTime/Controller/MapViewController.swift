@@ -15,38 +15,46 @@ class MapViewController: UIViewController {
     
     let mapView: MKMapView = {
         let map = MKMapView()
-        //map.showsScale = true
         map.translatesAutoresizingMaskIntoConstraints = false
+        
         return map
     }()
     
+    let locationManager = CLLocationManager()
+    
+    //MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.barStyle = .default
-        view.backgroundColor = .systemBackground
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "My map"
-        setupUI()
-        setupConstraints()
-        
-        LocationManager.shared.getUserLocation { [weak self] location in
-            DispatchQueue.main.async {
-                guard let strongSelf = self else {
-                    return
-                }
-                strongSelf.addMapPin(with: location)
-            }
-        }
+        setupViews()
+        setConstraints()
+        setupLocationManager()
+        checkLocationServices()
+//        LocationManager.shared.getUserLocation { [weak self] location in
+//            DispatchQueue.main.async {
+//                guard let strongSelf = self else {
+//                    return
+//                }
+//                strongSelf.mapView.showsUserLocation = true
+//                strongSelf.addMapPin(with: location)
+//            }
+//        }
     }
     
     override func viewDidLayoutSubviews() {
     }
     
-    func setupUI() {
+    // MARK: - Setup
+    
+    func setupViews() {
+        navigationController?.navigationBar.barStyle = .default
+        view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "My map"
         view.addSubview(mapView)
     }
     
-    func setupConstraints() {
+    func setConstraints() {
         sharedConstraints.append(contentsOf: [
             mapView.topAnchor.constraint(equalTo: view.topAnchor),
             mapView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -54,6 +62,21 @@ class MapViewController: UIViewController {
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
         NSLayoutConstraint.activate(sharedConstraints)
+    }
+    
+    private func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    }
+    
+    private func checkLocationServices() {
+        if CLLocationManager.locationServicesEnabled() {
+            setupLocationManager()
+            locationManagerDidChangeAuthorization(locationManager)
+        }
+        else {
+            // Show alert letting the user to know they have to turn this one
+        }
     }
     
     func addMapPin(with location: CLLocation) {

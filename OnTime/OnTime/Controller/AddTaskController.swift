@@ -66,22 +66,6 @@ class AddTaskController: UIViewController {
         return label
     }()
     
-    private let label: UILabel = {
-        let label = UILabel()
-        label.text = "Importance"
-        label.font = UIFont.systemFont(ofSize: 16)
-        
-        return label
-    }()
-    
-    private let label2: UILabel = {
-        let label = UILabel()
-        label.text = "Importance"
-        label.font = UIFont.systemFont(ofSize: 16)
-        
-        return label
-    }()
-    
     private let importanceSegmentedControl: UISegmentedControl = {
         let lowPriorityImage = UIImage(systemName: "arrow.down")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
         let highPriorityImage = UIImage(systemName: "exclamationmark.3")?.withTintColor(.systemGreen, renderingMode: .alwaysOriginal)
@@ -138,7 +122,7 @@ class AddTaskController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //taskNameField.becomeFirstResponder()
+        taskNameField.becomeFirstResponder()
         setupViews()
         setConstraints()
         setupDelegate()
@@ -162,6 +146,7 @@ class AddTaskController: UIViewController {
     // MARK: - Setup
     
     private func setupViews() {
+        navigationController?.navigationBar.prefersLargeTitles = false
         view.backgroundColor = .systemBackground
         title = "New Task"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDone))
@@ -177,9 +162,6 @@ class AddTaskController: UIViewController {
         stack.addArrangedSubview(importanceStack)
         stack.addArrangedSubview(datePicker)
         stack.addArrangedSubview(locationField)
-        
-        stack.addArrangedSubview(label)
-        stack.addArrangedSubview(label2)
         
         backgroundView.addSubview(stack)
     }

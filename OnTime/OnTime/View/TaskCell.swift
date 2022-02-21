@@ -11,7 +11,6 @@ class TaskCell: UITableViewCell {
     let beginTimeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -19,7 +18,6 @@ class TaskCell: UITableViewCell {
     
     let endTimeLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .right
         label.font = UIFont.systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -68,6 +66,17 @@ class TaskCell: UITableViewCell {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 5
+        stack.alignment = .leading
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stack
+    }()
+    
+    let stack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.spacing = 10
+        //stack.alignment = .leading
         stack.translatesAutoresizingMaskIntoConstraints = false
         
         return stack
@@ -94,34 +103,19 @@ class TaskCell: UITableViewCell {
         taskInfoStack.addArrangedSubview(taskNameLabel)
         taskInfoStack.addArrangedSubview(taskDescriptionLabel)
         taskInfoStack.addArrangedSubview(locationLabel)
-        addSubview(timeStack)
-        addSubview(taskInfoStack)
+        stack.addArrangedSubview(timeStack)
+        stack.addArrangedSubview(taskInfoStack)
+        addSubview(stack)
+        //addSubview(taskInfoStack)
     }
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            timeStack.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            timeStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            timeStack.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2)
+            stack.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            stack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            timeStack.widthAnchor.constraint(equalToConstant: 60)
         ])
-        
-        NSLayoutConstraint.activate([
-            taskInfoStack.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            taskInfoStack.leadingAnchor.constraint(equalTo: timeStack.trailingAnchor, constant: 10),
-            taskInfoStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            taskInfoStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
-        ])
-        
-//        NSLayoutConstraint.activate([
-//            taskDescriptionLabel.topAnchor.constraint(equalTo: taskNameLabel.bottomAnchor),
-//            taskDescriptionLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4),
-//            taskDescriptionLabel.leadingAnchor.constraint(equalTo: timeStack.trailingAnchor, constant: 10),
-//            taskDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)])
-//
-//        NSLayoutConstraint.activate([
-//            locationLabel.topAnchor.constraint(equalTo: taskDescriptionLabel.bottomAnchor),
-//            locationLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-//            locationLabel.leadingAnchor.constraint(equalTo: timeStack.trailingAnchor, constant: 10),
-//            locationLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)])
     }
 }

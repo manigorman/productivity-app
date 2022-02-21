@@ -17,7 +17,6 @@ class ScheduleViewController: UIViewController {
     
     let tableView: UITableView = {
         let table = UITableView(frame: .null, style: .insetGrouped)
-        //table.backgroundColor = .systemBackground
         
         table.register(TaskCell.self, forCellReuseIdentifier: "taskCellId")
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -91,8 +90,8 @@ class ScheduleViewController: UIViewController {
             // Set filtering and sorting on the request
             
             let startDate = Date.now
-            //let endDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: startDate)!
-            let endDate = Calendar.current.date(byAdding: .weekday, value: 1, to: startDate)!
+            let endDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: startDate)!
+            //let endDate = Calendar.current.date(byAdding: .weekday, value: 1, to: startDate)!
             print(startDate, endDate)
             //let pred = NSPredicate(format: "(beginTime >= %@) AND (beginTime <= %@)", startDate as NSDate, endDate as NSDate)
             //let pred = NSPredicate(format: "taskName CONTAINS %@", "Go")
@@ -142,8 +141,8 @@ class ScheduleViewController: UIViewController {
         }
     }
     
-    func updateItem(item: TaskListItem, newName: String) {
-        item.taskName = newName
+    func updateItem(item: TaskListItem) {
+        
         do {
             try context.save()
         }

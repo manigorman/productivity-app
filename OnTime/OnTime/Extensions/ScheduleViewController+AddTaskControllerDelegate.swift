@@ -15,3 +15,14 @@ extension ScheduleViewController: AddTaskDelegate {
         }
     }
 }
+
+extension ScheduleViewController: DetailedTaskDelegate {
+    func editTask(name: String, row: Int) {
+//        self.dismiss(animated: true) {
+            print(name)
+//            self.models[row].taskDescription = item.taskDescription
+//            self.updateItem(item: item)
+            self.tableView.reloadData()
+//        }
+    }
+}

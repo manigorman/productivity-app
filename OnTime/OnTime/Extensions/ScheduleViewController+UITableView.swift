@@ -57,10 +57,6 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
     }
     
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 50
-//    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellId", for: indexPath) as! TaskCell
         cell.taskNameLabel.text = models[indexPath.row].taskName
@@ -70,17 +66,22 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
         let strDate = timeFormatter.string(from: models[indexPath.row].beginTime ?? .now)
         cell.beginTimeLabel.text = strDate
         cell.endTimeLabel.text = "11:30"
-        cell.locationLabel.text = "5-th Avenue, 156 building"
+        
+        let attributedString = NSMutableAttributedString(string: "")
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = UIImage(systemName: "location.north.fill")!.withTintColor(.link, renderingMode: .alwaysOriginal)
+        attributedString.append(NSAttributedString(attachment: imageAttachment))
+        attributedString.append(NSAttributedString(" Chelyabinsk, Sovetskaya, 65"))
+        cell.locationLabel.attributedText = attributedString
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailTaskViewController = DetailTaskViewController()
-        navigationController?.pushViewController(detailTaskViewController, animated: true)
+        let detailedTaskViewController = DetailedTaskViewController()
+        detailedTaskViewController.task = self.models[indexPath.row].taskName!
+        detailedTaskViewController.row = indexPath.row
+        navigationController?.pushViewController(detailedTaskViewController, animated: true)
+        //self.present(rootViewController: detailedTaskViewController, animated: true, completion: nil)
     }
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//
-//    }
 }
