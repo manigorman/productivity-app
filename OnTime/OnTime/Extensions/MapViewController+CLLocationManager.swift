@@ -40,7 +40,6 @@ extension MapViewController: CLLocationManagerDelegate {
             break
         case .authorizedWhenInUse:
             mapView.showsUserLocation = true
-            
         case .denied:
             break
         case .notDetermined:

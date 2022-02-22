@@ -39,6 +39,9 @@ class MapViewController: UIViewController {
 //                strongSelf.addMapPin(with: location)
 //            }
 //        }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        mapView.addGestureRecognizer(tapGesture)
     }
     
     override func viewDidLayoutSubviews() {
@@ -88,6 +91,22 @@ class MapViewController: UIViewController {
         LocationManager.shared.resolveLocationName(with: location) { [weak self] locationName in
             //self?.title = locationName
         }
+    }
+    
+    @objc private func handleTap(gestureRecognizer: UITapGestureRecognizer) {
+        let location = gestureRecognizer.location(in: mapView)
+        let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        print("Coordinates = \(coordinate)")
+        
+//        if mapView.annotations.count == 1 {
+//            mapView.removeAnnotation(mapView.annotations.last!)
+//        }
+        mapView.addAnnotation(annotation)
+        
+        
     }
     
     

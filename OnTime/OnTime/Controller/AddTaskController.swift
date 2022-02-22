@@ -122,11 +122,14 @@ class AddTaskController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        taskNameField.becomeFirstResponder()
+        //taskNameField.becomeFirstResponder()
         setupViews()
         setConstraints()
         setupDelegate()
         registerKeyboardNotification()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        backgroundView.addGestureRecognizer(tap)
     }
     
     deinit {
@@ -202,10 +205,14 @@ class AddTaskController: UIViewController {
             alertTaskHandleError()
             return
         }
+        delegate?.addTask(taskName: taskName, taskDescription: taskDescriptionField.text!, beginTime: datePicker.date, endTime: "11:30", location: locationField.text!)
+    }
+    
+    @objc private func handleTap() {
+        //view.endEditing(true)
         taskNameField.resignFirstResponder()
         taskDescriptionField.resignFirstResponder()
         locationField.resignFirstResponder()
-        delegate?.addTask(taskName: taskName, taskDescription: taskDescriptionField.text!, beginTime: datePicker.date, endTime: "11:30", location: locationField.text!)
     }
     
     private func alertTaskHandleError() {
@@ -238,6 +245,7 @@ class AddTaskController: UIViewController {
         let userInfo = notification.userInfo
         let keyboardHeight = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         scrollView.contentOffset = CGPoint(x: 0, y: keyboardHeight.height / 2)
+        
     }
     
     @objc private func keyboardWillHide(notification: Notification) {
