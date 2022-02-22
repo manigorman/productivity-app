@@ -39,7 +39,6 @@ class TaskDaySection: UIView {
     // MARK: - Setup
     
     func setupViews() {
-        //addSubview(image)
         addSubview(weeksDayLabel)
         addSubview(dayInfoLabel)
     }

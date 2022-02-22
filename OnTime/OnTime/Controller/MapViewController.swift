@@ -11,16 +11,28 @@ import CoreLocation
 
 class MapViewController: UIViewController {
     
-    public var sharedConstraints = [NSLayoutConstraint]()
+    let locationManager = CLLocationManager()
     
-    let mapView: MKMapView = {
+    public let mapView: MKMapView = {
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         
         return map
     }()
     
-    let locationManager = CLLocationManager()
+    private let myLocationButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        button.layer.cornerRadius = button.frame.width / 2
+        button.backgroundColor = .systemBackground
+        let image = UIImage(systemName: "location.north.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .medium))
+        button.setImage(image, for: .normal)
+        button.layer.shadowRadius = 5
+        button.layer.shadowOpacity = 0.7
+        button.layer.shadowOffset = CGSize(width: 3, height: 3)
+        button.addTarget(self, action: #selector(renderUserLocation), for: .touchUpInside)
+        
+        return button
+    }()
     
     //MARK: - Life Cycle
     
@@ -30,21 +42,28 @@ class MapViewController: UIViewController {
         setConstraints()
         setupLocationManager()
         checkLocationServices()
-//        LocationManager.shared.getUserLocation { [weak self] location in
-//            DispatchQueue.main.async {
-//                guard let strongSelf = self else {
-//                    return
-//                }
-//                strongSelf.mapView.showsUserLocation = true
-//                strongSelf.addMapPin(with: location)
-//            }
-//        }
+        locationManager.startUpdatingLocation()
+        //        LocationManager.shared.getUserLocation { [weak self] location in
+        //            DispatchQueue.main.async {
+        //                guard let strongSelf = self else {
+        //                    return
+        //                }
+        //                strongSelf.mapView.showsUserLocation = true
+        //                strongSelf.addMapPin(with: location)
+        //            }
+        //        }
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        mapView.addGestureRecognizer(tapGesture)
+        let pressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+//        pressGesture.minimumPressDuration = 1
+        pressGesture.delaysTouchesBegan = true
+        pressGesture.allowableMovement = 10
+        mapView.addGestureRecognizer(pressGesture)
     }
     
     override func viewDidLayoutSubviews() {
+        
+        myLocationButton.frame = CGRect(x: view.frame.size.width - 70 - view.safeAreaInsets.right, y: view.frame.size.height - 90 - view.safeAreaInsets.bottom, width: 50, height: 50)
+        
     }
     
     // MARK: - Setup
@@ -52,12 +71,13 @@ class MapViewController: UIViewController {
     func setupViews() {
         navigationController?.navigationBar.barStyle = .default
         view.backgroundColor = .systemBackground
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "My map"
         view.addSubview(mapView)
+        view.addSubview(myLocationButton)
     }
     
     func setConstraints() {
+        var sharedConstraints = [NSLayoutConstraint]()
+        
         sharedConstraints.append(contentsOf: [
             mapView.topAnchor.constraint(equalTo: view.topAnchor),
             mapView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -88,27 +108,26 @@ class MapViewController: UIViewController {
         
         mapView.setRegion(MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)), animated: true)
         mapView.addAnnotation(pin)
-        LocationManager.shared.resolveLocationName(with: location) { [weak self] locationName in
-            //self?.title = locationName
+//        LocationManager.shared.resolveLocationName(with: location) { [weak self] locationName in
+//        }
+    }
+    
+    @objc private func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
+        print("tap")
+        if gestureRecognizer.state == UIGestureRecognizer.State.ended {
+            let location = gestureRecognizer.location(in: mapView)
+            let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            print("Coordinates = \(coordinate)")
+            mapView.addAnnotation(annotation)
+        }
+        else {
+            print("xxxxx")
         }
     }
     
-    @objc private func handleTap(gestureRecognizer: UITapGestureRecognizer) {
-        let location = gestureRecognizer.location(in: mapView)
-        let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinate
-        print("Coordinates = \(coordinate)")
-        
-//        if mapView.annotations.count == 1 {
-//            mapView.removeAnnotation(mapView.annotations.last!)
-//        }
-        mapView.addAnnotation(annotation)
-        
-        
+    @objc private func renderUserLocation() {
+        locationManager.startUpdatingLocation()
     }
-    
-    
-    
 }

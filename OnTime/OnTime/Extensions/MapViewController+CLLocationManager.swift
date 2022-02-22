@@ -9,11 +9,9 @@ import CoreLocation
 import MapKit
 
 extension MapViewController: CLLocationManagerDelegate {
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            let latitude = location.coordinate.latitude
-            let longitude = location.coordinate.longitude
-            print(latitude, longitude)
             manager.stopUpdatingLocation()
             
             render(location)

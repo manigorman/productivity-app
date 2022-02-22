@@ -149,6 +149,7 @@ class AddTaskController: UIViewController {
     // MARK: - Setup
     
     private func setupViews() {
+        scrollView.contentOffset = .zero
         navigationController?.navigationBar.prefersLargeTitles = false
         view.backgroundColor = .systemBackground
         title = "New Task"
@@ -183,6 +184,7 @@ class AddTaskController: UIViewController {
             backgroundView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
             backgroundView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
+        backgroundView.backgroundColor = .red
         
         NSLayoutConstraint.activate([
             stack.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
@@ -209,10 +211,10 @@ class AddTaskController: UIViewController {
     }
     
     @objc private func handleTap() {
-        //view.endEditing(true)
         taskNameField.resignFirstResponder()
         taskDescriptionField.resignFirstResponder()
         locationField.resignFirstResponder()
+        scrollView.contentOffset = CGPoint(x: 0, y: 0)
     }
     
     private func alertTaskHandleError() {
@@ -249,7 +251,7 @@ class AddTaskController: UIViewController {
     }
     
     @objc private func keyboardWillHide(notification: Notification) {
-        scrollView.contentOffset = .zero
+        scrollView.contentOffset = CGPoint(x: 0, y: 0)
     }
 }
 
