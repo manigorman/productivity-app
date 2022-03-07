@@ -184,7 +184,6 @@ class AddTaskController: UIViewController {
             backgroundView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
             backgroundView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
-        backgroundView.backgroundColor = .red
         
         NSLayoutConstraint.activate([
             stack.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),

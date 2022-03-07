@@ -28,7 +28,7 @@ class TaskCell: UITableViewCell {
         let label = UILabel()
         label.textAlignment = .left
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -37,7 +37,7 @@ class TaskCell: UITableViewCell {
     let taskDescriptionLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         label.font = UIFont.systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -57,6 +57,8 @@ class TaskCell: UITableViewCell {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 5
+        stack.alignment = .trailing
+        stack.distribution = .fillEqually
         stack.translatesAutoresizingMaskIntoConstraints = false
         
         return stack
@@ -67,16 +69,7 @@ class TaskCell: UITableViewCell {
         stack.axis = .vertical
         stack.spacing = 5
         stack.alignment = .leading
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        
-        return stack
-    }()
-    
-    let stack: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.spacing = 10
-        //stack.alignment = .leading
+        stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
         
         return stack
@@ -97,25 +90,27 @@ class TaskCell: UITableViewCell {
     // MARK: - Setup
     
     private func setupViews() {
+        addSubview(timeStack)
+        addSubview(taskInfoStack)
         timeStack.addArrangedSubview(beginTimeLabel)
         timeStack.addArrangedSubview(endTimeLabel)
-        taskInfoStack.addArrangedSubview(timeStack)
         taskInfoStack.addArrangedSubview(taskNameLabel)
         taskInfoStack.addArrangedSubview(taskDescriptionLabel)
         taskInfoStack.addArrangedSubview(locationLabel)
-        stack.addArrangedSubview(timeStack)
-        stack.addArrangedSubview(taskInfoStack)
-        addSubview(stack)
-        //addSubview(taskInfoStack)
     }
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            stack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
-            timeStack.widthAnchor.constraint(equalToConstant: 60)
+            timeStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            timeStack.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            timeStack.widthAnchor.constraint(greaterThanOrEqualToConstant: 60),
+            timeStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+//            timeStack.heightAnchor.constraint(equalToConstant: 150),
+            
+            taskInfoStack.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            taskInfoStack.leadingAnchor.constraint(equalTo: timeStack.trailingAnchor, constant: 10),
+            taskInfoStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            taskInfoStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
         ])
     }
 }

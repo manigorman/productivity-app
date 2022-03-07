@@ -136,10 +136,10 @@
 			children = (
 				C5FE58C427BBC7BB00EAA944 /* MainTabBarController.swift */,
 				C5FE58D527BBC8F500EAA944 /* ScheduleViewController.swift */,
-				C54CC81927BC493C002681D9 /* AddTaskController.swift */,
-				C501F1AD27C38B37006C8693 /* DetailedTaskViewController.swift */,
 				C5FE58D727BBC90A00EAA944 /* CalendarViewController.swift */,
 				C5FE58D927BBC91500EAA944 /* MapViewController.swift */,
+				C54CC81927BC493C002681D9 /* AddTaskController.swift */,
+				C501F1AD27C38B37006C8693 /* DetailedTaskViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -376,10 +376,13 @@
 				DEVELOPMENT_TEAM = MNX7G7328F;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OnTime/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow location access to use map.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -403,10 +406,13 @@
 				DEVELOPMENT_TEAM = MNX7G7328F;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OnTime/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow location access to use map.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

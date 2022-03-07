@@ -8,6 +8,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import AudioToolbox
 
 class MapViewController: UIViewController {
     
@@ -16,7 +17,6 @@ class MapViewController: UIViewController {
     public let mapView: MKMapView = {
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
-        
         return map
     }()
     
@@ -34,10 +34,14 @@ class MapViewController: UIViewController {
         return button
     }()
     
+    let searchBarController = UISearchController()
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
         setupViews()
         setConstraints()
         setupLocationManager()
@@ -53,6 +57,10 @@ class MapViewController: UIViewController {
         //            }
         //        }
         
+        
+        searchBarController.searchBar.showsCancelButton = true
+        searchBarController.searchBar.showsScopeBar = true
+        
         let pressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
 //        pressGesture.minimumPressDuration = 1
         pressGesture.delaysTouchesBegan = true
@@ -64,15 +72,16 @@ class MapViewController: UIViewController {
         
         myLocationButton.frame = CGRect(x: view.frame.size.width - 70 - view.safeAreaInsets.right, y: view.frame.size.height - 90 - view.safeAreaInsets.bottom, width: 50, height: 50)
         
+        searchBarController.searchBar.frame = CGRect(x: 0, y: 50, width: view.frame.width, height: 40)
     }
     
     // MARK: - Setup
     
     func setupViews() {
-        navigationController?.navigationBar.barStyle = .default
         view.backgroundColor = .systemBackground
         view.addSubview(mapView)
         view.addSubview(myLocationButton)
+        view.addSubview(searchBarController.searchBar)
     }
     
     func setConstraints() {
@@ -80,7 +89,7 @@ class MapViewController: UIViewController {
         
         sharedConstraints.append(contentsOf: [
             mapView.topAnchor.constraint(equalTo: view.topAnchor),
-            mapView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
