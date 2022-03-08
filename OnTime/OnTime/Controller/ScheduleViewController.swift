@@ -10,6 +10,14 @@ import CoreData
 
 class ScheduleViewController: UIViewController {
     
+    private let searchController: UISearchController = {
+        let controller = UISearchController(searchResultsController: SearchTaskViewController())
+        controller.searchBar.placeholder = "Search for a task or place"
+        controller.searchBar.searchBarStyle = .minimal
+        
+        return controller
+    }()
+    
     // Core Data context
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -24,9 +32,6 @@ class ScheduleViewController: UIViewController {
         return table
     }()
     
-    private let searchController = UISearchController(searchResultsController: nil)
-    
-    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -38,6 +43,7 @@ class ScheduleViewController: UIViewController {
         setupViews()
         setConstraints()
         setupDelegate()
+        searchController.searchResultsUpdater = self
     }
     
     // MARK: - Setup
@@ -59,8 +65,6 @@ class ScheduleViewController: UIViewController {
     private func setupDelegate() {
         tableView.delegate = self
         tableView.dataSource = self
-        
-        searchController.searchBar.delegate = self
     }
     
     private func setNavigationBar() {
@@ -152,8 +156,8 @@ class ScheduleViewController: UIViewController {
     }
 }
 
-extension ScheduleViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
-    }
+extension ScheduleViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+           
+        }
 }
